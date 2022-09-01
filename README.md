@@ -7,6 +7,7 @@ Readme for DA_2DCHROM
 
 	Author: 	Nikola Ladislavová	(ladislan@vscht.cz; ORCID 0000-0001-8733-4780)
 				UCT Prague, Department of Analytical Chemistry, UCT Prague
+	DOI: 10.5281/zenodo.7040975
 
 #########################USER GUIDE#########################
 VERSION: 1.0
