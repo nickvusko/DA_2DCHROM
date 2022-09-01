@@ -60,29 +60,35 @@ The “Find anchor peaks" part depends on the data alignment method and spectral
 The main "run" line 964 of the script:
 x=data_align(Ref_chrom :str, Preprocess=True, Source_folder = "data", Result_folder= "metadata/time_correction", method="DISCO", similarity="Pearson", transform =(1.,0.)).run_process()
 
-##Ref_chrom## -> str
+##Ref_chrom##
+
 The only mandatory input from the user is the Ref_chrom argument. It needs to be in a string format ("name_of_the_file_without_a_file_extension").
 For example, if the line looks like this:
 data_align("500_system_1_M13_4")
 The script will take that file as a referential chromatogram, performs pre-processing step, it takes all the files in a "data" folder, saves the result into the "metadata/time_correction", the alignment method will be "DISCO", the similarity of spectra will be calculated by Pearson correlation coefficient, and the spectral data will not be transformed in any way.
 Please note that the Ref_chrom file needs to be in the Source_folder.
 
-##Preprocess## -> bool
+##Preprocess##
+
 The preprocess argument considers True/False values. It is set to True by default. The preprocessing step takes the originial data, checks the number formating (replaces "," for "." in numerical columns), renames columns into the proper name format, and merges peaks of the same chemical substances. The preprocessed data are stored in the "metadata/merged_peaks" folder, and the data alignment itself is performed on the preprocessed data. If you set pre-process to False, the script will perform the data alignment straight on the files stored in Source_folder. The Pre-process step also deals with the ChromaToF feature which adds a "saturated (number )" comment into the "Area" and "Height" column.
 
-##Source_folder## -> str
+##Source_folder##
+
 The Source_folder argument should be a full existing folder path (recommended). If you are getting the "File not found" error, please check the folder path. The default value is set to working_directory**/data folder.
 
-##Result_folder## -> str
+##Result_folder## 
+
 The Result_folder argument should be a full folder path (recommended). If the folder does not exist, the script will create the folder.
 
 ** You can check your working directory by following commands:
 import os
 os.getcwd()
 
-##method## -> str
+##method##
+
 For version 1.0, there are 6 methods available: BiPACE2D[1], DISCO[2], MSort[3], PAM[4], RI, and TNT-DA
 See the references for the explanation and selection rules of the parameters of each algorithm.
+
 	#BiPACE2D#
 The algorithm takes 5 arguments: RT1 tolerance parameter, RT2 tolerance parameter, T1 critical value, T2 critical value and similarity threshold value.
 Setting of T1, T2 influences the decision whether the algorithm should proceed with peak comparison or whether the two compared peaks are too far away.
@@ -117,10 +123,12 @@ First, anchor points need to be exported from ChromaToF(R) software: 2 columns -
 	#TNT-DA#
 TNT-DA is derived from DISCO discrimination rules and the PAM selection rule. First, retention times are recalculated to z-scores. For every peak in a reference table, Canberran (or Euclidian) distances for every peak in an aligned table are calculated. Then 20 % of the nearest peaks are considered as potential anchor peaks. Spectral similarity (cosine similarity with 0.53, 1.3 transformation) is calculated for every potential anchor peak. If the spectral similarity overreaches the 90 % (the value is set by the user) similarity threshold, PAM selection rule is applied, and the peak from aligned table with the highest score is marked as an anchor peak.
 
-##similarity## -> str
+##similarity##
+
 There are two available methods for spectral similarity comparison - Pearson (Pearsons correlation coefficient) and DOT (cosine similarity).
 
-##transform## -> float
+##transform##
+
 transform =(a,b) takes the transformation coefficients for the mass spectra. The intensity for each mass is recalculated by the following formula:
 ((intensity)**a)*(m/z)**b
 
@@ -150,9 +158,11 @@ The software development was funded by TACR (programme IMPAKT 1; project VJ01010
 
 [4]	Kim, Seongho, et al. "An optimal peak alignment for comprehensive two-dimensional gas chromatography mass spectrometry using mixture similarity measure." Bioinformatics 27.12 (2011): 1660-1666.
       DOI: https://doi.org/10.1093/bioinformatics/btr188
-[5] doplnit
+
 #########################PROGRAMMER GUIDE#########################
+
 ####Class data_align()####
+
 	Initial attributes are set to the chosen methods accordingly. The script will prompt the user to type in the necessary information.
 
 ##__init__(self,Ref_chrom :str, Preprocess=True, Source_folder = "data", Result_folder= "metadata/time_correction", method="DISCO", similarity="Pearson", transform =(1.,0.), multipool=True)##
