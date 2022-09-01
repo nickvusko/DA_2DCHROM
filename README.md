@@ -131,11 +131,13 @@ The aligned file format is identical to the input file format. Anchor peaks file
 	####RUNNING THE SCRIPT####
 You can run the code simply through the cmd: python “path_to_the_script/DA_2DCHROM.py”.
 If you want to edit arguments, you need to open the code in any .txt editor (or other software) and simply rewrite the argument.
+
 	####LICENSE####
 This script is licensed under Creative Commons Attribution 4.0 International.
 
-####ACKNOWLEDGMENT####
+	####ACKNOWLEDGMENT####
 The software development was funded by TACR (programme IMPAKT 1; project VJ01010123)
+
 	####REFERENCES####
 [1]	Hoffmann, N., et al., BiPACE 2D—graph-based multiple alignment for comprehensive 2D gas chromatography-mass spectrometry. Bioinformatics, 2013. 30(7): p. 988-995.
       DOI: https://doi.org/10.1093/bioinformatics/btt738
