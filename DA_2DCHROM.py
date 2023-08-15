@@ -80,12 +80,12 @@ class data_align():
         self.Transformation=transform
         self.multipool = multipool
         if self.Preprocess == True:
-            self.minimal_merge = 60 #int(input("What is the minimum similarity (in %) for peak merge matching?"))
+            self.minimal_merge = int(input("What is the minimum similarity (in %) for peak merge matching?"))
             self.Folder_merged = f"{self.Result_folder}{os.sep}merged_peaks"
             if not os.path.isdir(self.Folder_merged):
                 os.makedirs(self.Folder_merged)
         if method == "DISCO":
-            self.similarity = 60 #float(input("Similarity treshold parameter: "))
+            self.similarity = float(input("Similarity treshold parameter: "))
         elif method == "BiPACE2D":
             self.D1 = float(input("D1 parameter: "))
             self.D2 = float(input("D2 parameter: "))
@@ -277,7 +277,7 @@ class data_align():
         except KeyError:
             print("Variable names are already correct .")
             pass
-        ## this part of code reported as a bug causing crashes, will be fixed in future update
+        # this part of code reported as a bug causing crashes, will be fixed in future update
         # if sum(file.isna().sum())>0:
         #     file = file.dropna(how="all", axis=0)
         #     print("zero values dropped")
