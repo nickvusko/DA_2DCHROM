@@ -288,15 +288,14 @@ class data_align():
         for row in file.index:
             df = pd.DataFrame(file.loc[row, :]).transpose()
             samplemasses_main = {}
-            spectrum1 = df.at[row,"Spectrum"].split(" ")
+            spectrum1 = df.at[row,"Spectrum"].strip().split(" ")
             for indic1 in spectrum1:
-               key =int(float(indic1.split(":")[0]))
-               value= float(indic1.split(":")[1])
-               if key >=31:
+                key =int(float(indic1.split(":")[0]))
+                value= float(indic1.split(":")[1])
+                if key >=31:
                    if self.Transformation[0] != 1 or self.Transformation[1] != 0:
                        value = round((key**self.Transformation[1])*(value**self.Transformation[0]),2) 
                    samplemasses_main.update({key : value})
-               else:continue
             lower_band_1 = int(df["1st Dimension Time (s)"])
             upper_band_1 = int(df["1st Dimension Time (s)"]+11)
             lower_band_2 = float(df["2nd Dimension Time (s)"])
@@ -310,7 +309,7 @@ class data_align():
                     if main_df.iat[0,0] == compare_df.iat[0,0]:
                         continue
                     else:
-                        result = self.compare_spectra(samplemasses_main, compare_df.at[sub_row,"Spectrum"].split(" "))
+                        result = self.compare_spectra(samplemasses_main, compare_df.at[sub_row,"Spectrum"].strip().split(" "))
                         if result >= self.minimal_merge:
                             file.at[sub_row,"index"] = file.at[row,"index"]
                         pass
@@ -350,7 +349,6 @@ class data_align():
                 if self.Transformation[0] != 1 or self.Transformation[1] != 0:
                     value = round((key**self.Transformation[1])*(value**self.Transformation[0]),2) 
                 samplemasses_compare.update({key : value})
-            else:continue
         spectrum_table_spectra = pd.DataFrame.from_dict([samplemasses_main, samplemasses_compare]).fillna(0)
         _1st_array = spectrum_table_spectra.iloc[0, :].to_numpy().astype("float")
         _2nd_array = spectrum_table_spectra.iloc[1, :].to_numpy().astype("float")
@@ -451,7 +449,7 @@ class data_align():
                            value = round((key**self.Transformation[1])*(value**self.Transformation[0]),2) 
                        samplemasses_main.update({key : value})
                    else:continue
-                result = self.compare_spectra(samplemasses_main, sorted_df.at[e,"Spectrum"].split(" "))
+                result = self.compare_spectra(samplemasses_main, sorted_df.at[e,"Spectrum"].strip().split(" "))
                 if result>= self.similarity:
                     comp_results[e] = result
             try:
@@ -518,7 +516,7 @@ class data_align():
               rt1, rt2 = self.Ref_chrom.at[i,"1st Dimension Time (s)"], self.Ref_chrom.at[i,"2nd Dimension Time (s)"]
               comp_rt1, comp_rt2 = align_chrom.at[e,"1st Dimension Time (s)"], align_chrom.at[e,"2nd Dimension Time (s)"]
               if math.exp((-(rt1-comp_rt1)**2)/(2*self.D1)**2) >=self.T1 and math.exp((-(rt2-comp_rt2)**2)/(2*self.D2)**2) >= self.T2:
-                  comp_spectra = self.compare_spectra(samplemasses_main, align_chrom.at[e,"Spectrum"].split(" "))
+                  comp_spectra = self.compare_spectra(samplemasses_main, align_chrom.at[e,"Spectrum"].strip().split(" "))
                   if comp_spectra >= self.similarity:
                       result = comp_spectra*math.exp(((-(rt1-comp_rt1))**2/(2*self.D1)**2))*math.exp((-(rt2-comp_rt2))**2/(2*self.D2)**2)
                       comp_results[e] = result
@@ -582,7 +580,7 @@ class data_align():
             if focus_range.shape[0] >0:
                 comp_results = {}
                 for e in focus_range.index:
-                    result = self.compare_spectra(samplemasses_main, focus_range.at[e,"Spectrum"].split(" "))
+                    result = self.compare_spectra(samplemasses_main, focus_range.at[e,"Spectrum"].strip().split(" "))
                     if result>= self.similarity:
                         comp_results[e] = result
                 try:
@@ -643,7 +641,7 @@ class data_align():
             else:
                 print("No valid method for calculating the distance. Force quit.")
                 quit()
-            align_chrom["Similarity"] = [self.compare_spectra(samplemasses_main, (align_chrom.at[x,"Spectrum"]).split(" ")) for x in align_chrom.index]
+            align_chrom["Similarity"] = [self.compare_spectra(samplemasses_main, (align_chrom.at[x,"Spectrum"]).strip().split(" ")) for x in align_chrom.index]
             align_chrom["Result"] = (self.w/(1+align_chrom["Dist"]))+(1-self.w)*align_chrom["Similarity"]
             idx = align_chrom["Result"].idxmax()
             result_table.at[row, "match"] = idx
@@ -765,7 +763,7 @@ class data_align():
                            value = round((key**self.Transformation[1])*(value**self.Transformation[0]),2) 
                        samplemasses_main.update({key : value})
                    else:continue
-                spectral_sim = self.compare_spectra(samplemasses_main, sorted_df.at[e,"Spectrum"].split(" "))
+                spectral_sim = self.compare_spectra(samplemasses_main, sorted_df.at[e,"Spectrum"].strip().split(" "))
                 if spectral_sim>= self.similarity:
                     result = (self.w/(1+align_chrom.at[e,"Dist"]))+(1-self.w)*spectral_sim
                     comp_results[e] = result
