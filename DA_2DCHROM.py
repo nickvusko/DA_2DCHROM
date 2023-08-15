@@ -440,7 +440,7 @@ class data_align():
             comp_results = {}
             for e in sorted_df.index:
                 samplemasses_main = {}
-                spectrum1 = ref_chrom.at[i,"Spectrum"].split(" ")
+                spectrum1 = ref_chrom.at[i,"Spectrum"].strip().split(" ")
                 for indic1 in spectrum1:
                    key =int(float(indic1.split(":")[0]))
                    value= float(indic1.split(":")[1])
@@ -504,7 +504,7 @@ class data_align():
           comp_results = {}
           for e in align_chrom.index:
               samplemasses_main = {}
-              spectrum1 = self.Ref_chrom.at[i,"Spectrum"].split(" ")
+              spectrum1 = self.Ref_chrom.at[i,"Spectrum"].strip().split(" ")
               for indic1 in spectrum1:
                  key =int(float(indic1.split(":")[0]))
                  value= float(indic1.split(":")[1])
@@ -562,7 +562,7 @@ class data_align():
         """
         for i in self.Ref_chrom.index:
             samplemasses_main = {}
-            spectrum1 = self.Ref_chrom.at[i,"Spectrum"].split(" ")
+            spectrum1 = self.Ref_chrom.at[i,"Spectrum"].strip().split(" ")
             for indic1 in spectrum1:
                key =int(float(indic1.split(":")[0]))
                value= float(indic1.split(":")[1])
@@ -624,7 +624,7 @@ class data_align():
         ref_chrom = self.Ref_chrom.reset_index()
         for row in ref_chrom.index:
             samplemasses_main = {}
-            spectrum1 = self.Ref_chrom.at[row,"Spectrum"].split(" ")
+            spectrum1 = self.Ref_chrom.at[row,"Spectrum"].strip().split(" ")
             for indic1 in spectrum1:
                key =int(float(indic1.split(":")[0]))
                value= float(indic1.split(":")[1])
@@ -754,7 +754,7 @@ class data_align():
             comp_results = {}
             for e in sorted_df.index:
                 samplemasses_main = {}
-                spectrum1 = ref_chrom.at[i,"Spectrum"].split(" ")
+                spectrum1 = ref_chrom.at[i,"Spectrum"].strip().split(" ")
                 for indic1 in spectrum1:
                    key =int(float(indic1.split(":")[0]))
                    value= float(indic1.split(":")[1])
